@@ -32,7 +32,15 @@ export class ListItem extends TextBlock {
         children.push(...new TextInline(child).getContent());
         return;
       }
-
+      if (
+        child.type === 'element' &&
+        child.tagName === 'p' &&
+        child.children.length === 1 &&
+        isInlineTextElement(child.children[0])
+      ) {
+        children.push(...new TextInline(child.children[0]).getContent());
+        return;
+      }
       if (child.type === 'element' && isListTag(child.tagName)) {
         nestedElements.push(...new List(child, level + 1, exportOptions).getContent());
         return;
