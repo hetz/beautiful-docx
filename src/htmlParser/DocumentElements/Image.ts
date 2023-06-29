@@ -11,6 +11,7 @@ import {
   VerticalPositionRelativeFrom,
   ITextWrapping,
   AlignmentType,
+  Paragraph,
 } from 'docx';
 import { Element, Styles } from 'himalaya';
 import { DocxExportOptions } from '../../options';
@@ -220,7 +221,7 @@ export class Image implements DocumentElement {
   }
 
   transformToDocx() {
-    return [new ImageRun(this.options)];
+    return [new Paragraph({ children: [new ImageRun(this.options)] }), new ImageRun(this.options)];
   }
 
   static getStaticImageElement(image: Image) {
