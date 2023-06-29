@@ -40,5 +40,6 @@ export declare type SizeUnit = 'px' | 'pt' | 'em' | 'rem' | 'vh' | 'vw' | '%' | 
 export declare const parseSizeValue: (value: string | number) => [number, SizeUnit];
 export declare const hasSpacesAtStart: (str: string) => boolean;
 export declare const hasSpacesAtEnd: (str: string) => boolean;
+export declare const getUUID: () => string;
 export {};
 //# sourceMappingURL=utils.d.ts.map

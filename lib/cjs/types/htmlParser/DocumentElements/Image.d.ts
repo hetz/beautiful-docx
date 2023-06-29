@@ -1,4 +1,4 @@
-import { IImageOptions, ImageRun, IMediaTransformation } from 'docx';
+import { IImageOptions, ImageRun, IMediaTransformation, Paragraph } from 'docx';
 import { Element } from 'himalaya';
 import { DocxExportOptions } from '../../options';
 import { DocumentElement, DocumentElementType } from './DocumentElement';
@@ -29,7 +29,7 @@ export declare class Image implements DocumentElement {
     private get margins();
     private getWrapping;
     getContent(): this[];
-    transformToDocx(): ImageRun[];
+    transformToDocx(): (Paragraph | ImageRun)[];
     static getStaticImageElement(image: Image): TextBlock;
 }
 export {};
