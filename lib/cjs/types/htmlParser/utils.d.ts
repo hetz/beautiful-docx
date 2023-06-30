@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { AlignmentType } from 'docx';
 import { Attribute, Styles } from 'himalaya';
 import { DocxExportOptions } from '../options';
@@ -41,5 +42,6 @@ export declare const parseSizeValue: (value: string | number) => [number, SizeUn
 export declare const hasSpacesAtStart: (str: string) => boolean;
 export declare const hasSpacesAtEnd: (str: string) => boolean;
 export declare const getUUID: () => string;
+export declare const textToPngBuffer: (text: string) => Buffer;
 export {};
 //# sourceMappingURL=utils.d.ts.map

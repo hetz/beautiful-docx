@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Node } from 'himalaya';
 import { ImageMap } from '../options';
-import { getAttributeMap } from './utils';
+import { getAttributeMap, textToPngBuffer } from './utils';
 
 export class ImagesAdapter {
   private readonly imagesMap: ImageMap = {};
@@ -53,6 +53,7 @@ export class ImagesAdapter {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(`Download image error: ${url} ${error}`);
+      return textToPngBuffer(`Download err ${url}`);
     }
   }
 }

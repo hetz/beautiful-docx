@@ -1,6 +1,7 @@
 import { AlignmentType, convertInchesToTwip, convertMillimetersToTwip } from 'docx';
 import { Attribute, Styles } from 'himalaya';
 import { DocxExportOptions } from '../options';
+import { createCanvas } from 'canvas';
 
 export const FIRST_LINE_INDENT_MILLIMETERS = 6;
 export const PIXELS_TO_POINT_RATIO = 1 / 4;
@@ -245,4 +246,17 @@ export const getUUID = (): string => {
     Math.random().toString(16).substring(2) +
     new Date().getTime().toString(16)
   ).substr(0, 32);
+};
+
+export const textToPngBuffer = (text: string): Buffer => {
+  const canvas = createCanvas(300, 50);
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#f3f3f3';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#000000';
+  ctx.font = '12px Arial';
+  ctx.fillText(text, 10, 30);
+  const pngBuffer = canvas.toBuffer('image/png');
+  return pngBuffer;
 };
