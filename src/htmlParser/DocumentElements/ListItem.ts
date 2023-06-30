@@ -32,15 +32,18 @@ export class ListItem extends TextBlock {
         children.push(...new TextInline(child).getContent());
         return;
       }
+      //# region 特殊处理 li 中的 p 标签
       if (
         child.type === 'element' &&
         child.tagName === 'p' &&
-        child.children.length === 1 &&
-        isInlineTextElement(child.children[0])
+        child.children.map(x => isInlineTextElement(x)).filter(x => !x).length == 0
       ) {
-        children.push(...new TextInline(child.children[0]).getContent());
+        child.children.forEach(x => {
+          children.push(...new TextInline(x).getContent());
+        });
         return;
       }
+      //#endregion
       if (child.type === 'element' && isListTag(child.tagName)) {
         nestedElements.push(...new List(child, level + 1, exportOptions).getContent());
         return;

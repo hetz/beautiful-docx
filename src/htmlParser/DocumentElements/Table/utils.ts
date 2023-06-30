@@ -2,7 +2,7 @@ import { ColorTranslator } from 'colortranslator';
 import { BorderStyle, convertInchesToTwip, IBorderOptions } from 'docx';
 import { Node, Styles } from 'himalaya';
 
-const INLINE_TEXT_ELEMENTS = ['strong', 'i', 'u', 's', 'a'];
+const INLINE_TEXT_ELEMENTS = ['strong', 'i', 'u', 's', 'a', 'span', 'b', 'del'];
 const TABLE_LEFT_INDENT = 0.06;
 
 export const isInlineTextElement = (node: Node): boolean => {
