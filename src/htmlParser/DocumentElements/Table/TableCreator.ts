@@ -37,7 +37,7 @@ export class TableCreator implements DocumentElement {
     this.content = [...beforeTableContent, this, new TextBlock({ children: [] }, [])];
 
     this.options = {
-      layout: TableLayoutType.FIXED,
+      layout: TableLayoutType.AUTOFIT,
       alignment: AlignmentType.CENTER,
       borders: this.borders,
       width: {
