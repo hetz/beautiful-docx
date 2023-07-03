@@ -48,12 +48,12 @@ export class ImagesAdapter {
 
   async downloadImage(url: string): Promise<Buffer> {
     try {
-      const res = await axios.get(url, { responseType: 'arraybuffer', timeout: 5000 });
+      const res = await axios.get(url, { responseType: 'arraybuffer', timeout: 50 });
       return Buffer.from(res.data, 'binary');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(`Download image error: ${url} ${error}`);
-      return textToPngBuffer(`Download err ${url}`);
+      return textToPngBuffer(`DownErr ${url}`);
     }
   }
 }

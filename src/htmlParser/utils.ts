@@ -249,13 +249,13 @@ export const getUUID = (): string => {
 };
 
 export const textToPngBuffer = (text: string): Buffer => {
-  const canvas = createCanvas(300, 50);
+  const canvas = createCanvas(600, 50);
   const ctx = canvas.getContext('2d');
 
   ctx.fillStyle = '#f3f3f3';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = '#000000';
-  ctx.font = '12px Arial';
+  ctx.font = '10px Arial';
   ctx.fillText(text, 10, 30);
   const pngBuffer = canvas.toBuffer('image/png');
   return pngBuffer;
