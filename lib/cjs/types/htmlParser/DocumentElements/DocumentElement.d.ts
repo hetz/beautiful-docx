@@ -6,7 +6,7 @@ export interface DocumentElement {
 }
 export declare type DocumentElementType = InlineTextType | BlockTextType | TableElementType | ContainerElementType | ImageType | PageBreakType | TableOfContentsType | EmptyLineType;
 export declare type BlockTextType = 'paragraph' | 'text' | 'heading' | 'list' | 'list-item' | 'blockquote';
-export declare type InlineTextType = 'br' | 'text' | 'strong' | 'i' | 'u' | 's' | 'del' | 'a' | 'b' | 'em' | 'span' | 'sup' | 'sub';
+export declare type InlineTextType = 'br' | 'hr' | 'text' | 'strong' | 'i' | 'u' | 's' | 'del' | 'a' | 'b' | 'em' | 'span' | 'code' | 'sup' | 'sub';
 export declare type TableElementType = 'table' | 'table-row' | 'table-cell';
 export declare type ContainerElementType = 'figure';
 export declare type ImageType = 'image';
