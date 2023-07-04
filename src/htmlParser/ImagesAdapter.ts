@@ -63,7 +63,7 @@ export class ImagesAdapter {
     }
   }
 
-  async downloadImage(url: string): Promise<Buffer> {
+  async downloadImage(url: string | null): Promise<Buffer> {
     try {
       if (url) {
         const res = await this.axiosIns.get(url, { responseType: 'arraybuffer', timeout: 5000 });

@@ -9,6 +9,6 @@ export declare class ImagesAdapter {
     downloadImages(root: Node[]): Promise<ImageMap>;
     private parseImagesUrls;
     private addImageToMap;
-    downloadImage(url: string): Promise<Buffer>;
+    downloadImage(url: string | null): Promise<Buffer>;
 }
 //# sourceMappingURL=ImagesAdapter.d.ts.map
