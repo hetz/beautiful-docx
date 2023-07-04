@@ -255,8 +255,8 @@ export const textToPngBuffer = (text: string, width = 600, height = 50): Buffer 
   ctx.fillStyle = '#f3f3f3';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = '#000000';
-  ctx.font = '10px Arial';
-  ctx.fillText(text, 10, 30);
+  ctx.font = '10px';
+  ctx.fillText(text, 10, Math.floor(height / 2));
   const pngBuffer = canvas.toBuffer('image/png');
   return pngBuffer;
 };
