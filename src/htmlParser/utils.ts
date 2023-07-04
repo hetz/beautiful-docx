@@ -248,8 +248,8 @@ export const getUUID = (): string => {
   ).substr(0, 32);
 };
 
-export const textToPngBuffer = (text: string): Buffer => {
-  const canvas = createCanvas(600, 50);
+export const textToPngBuffer = (text: string, width = 600, height = 50): Buffer => {
+  const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
 
   ctx.fillStyle = '#f3f3f3';

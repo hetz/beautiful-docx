@@ -1,11 +1,13 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { Node } from 'himalaya';
 import { ImageMap } from '../options';
 import { getAttributeMap, textToPngBuffer } from './utils';
-
+import axiosRateLimit, { RateLimitedAxiosInstance, rateLimitOptions } from 'axios-rate-limit';
+import axiosRetry, { IAxiosRetryConfig } from 'axios-retry';
 export class ImagesAdapter {
   private readonly imagesMap: ImageMap = {};
   private imagesUrls: string[] = [];
+  private axiosIns: AxiosInstance = axios.create();
 
   constructor(currentImages?: ImageMap) {
     if (currentImages) {
@@ -15,8 +17,23 @@ export class ImagesAdapter {
 
   async downloadImages(root: Node[]) {
     this.parseImagesUrls(root);
+    this.axiosIns = axiosRateLimit(this.axiosIns, {
+      maxRequests: 3,
+      perMilliseconds: 1000,
+    });
+    axiosRetry(this.axiosIns, { retries: 2 });
 
     // TODO: configure downloading in pack with 5-10 images
+    // eslint-disable-next-line no-console
+    this.imagesUrls = Array.from(new Set(this.imagesUrls));
+    const totalImagesLength = this.imagesUrls.length;
+    for await (const [index, url] of this.imagesUrls.entries()) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `downloadImage ${index + 1}/${totalImagesLength}, ${Math.floor(((index + 1) / totalImagesLength) * 100)}% `
+      );
+      await this.addImageToMap(url);
+    }
     await Promise.all(this.imagesUrls.map(i => this.addImageToMap(i)));
 
     return this.imagesMap;
@@ -48,8 +65,12 @@ export class ImagesAdapter {
 
   async downloadImage(url: string): Promise<Buffer> {
     try {
-      const res = await axios.get(url, { responseType: 'arraybuffer', timeout: 5000 });
-      return Buffer.from(res.data, 'binary');
+      if (url) {
+        const res = await this.axiosIns.get(url, { responseType: 'arraybuffer', timeout: 5000 });
+        return Buffer.from(res.data, 'binary');
+      } else {
+        return textToPngBuffer(`Image not src`, 300, 40);
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(`Download image error: ${url} ${error}`);
