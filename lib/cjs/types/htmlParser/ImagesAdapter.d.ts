@@ -4,6 +4,7 @@ import { ImageMap } from '../options';
 export declare class ImagesAdapter {
     private readonly imagesMap;
     private imagesUrls;
+    private axiosIns;
     constructor(currentImages?: ImageMap);
     downloadImages(root: Node[]): Promise<ImageMap>;
     private parseImagesUrls;

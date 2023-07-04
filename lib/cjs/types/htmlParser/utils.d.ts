@@ -42,6 +42,6 @@ export declare const parseSizeValue: (value: string | number) => [number, SizeUn
 export declare const hasSpacesAtStart: (str: string) => boolean;
 export declare const hasSpacesAtEnd: (str: string) => boolean;
 export declare const getUUID: () => string;
-export declare const textToPngBuffer: (text: string) => Buffer;
+export declare const textToPngBuffer: (text: string, width?: number, height?: number) => Buffer;
 export {};
 //# sourceMappingURL=utils.d.ts.map
