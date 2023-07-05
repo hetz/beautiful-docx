@@ -68,7 +68,7 @@ export class ImagesAdapter {
   async downloadImage(url: string | null): Promise<Buffer> {
     try {
       if (url) {
-        const tmpdir = '/tmp'; //os.tmpdir();
+        const tmpdir = os.tmpdir();
         const hash = crypto.createHash('md5').update(url).digest('hex');
         const filepath = path.join(tmpdir, hash);
         if (existsSync(filepath)) {
