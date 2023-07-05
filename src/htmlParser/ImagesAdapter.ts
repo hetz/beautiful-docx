@@ -1,9 +1,13 @@
+import { existsSync, readFileSync, writeFileSync } from 'fs';
+import os from 'os';
+import crypto from 'crypto';
 import axios, { AxiosInstance } from 'axios';
 import { Node } from 'himalaya';
 import { ImageMap } from '../options';
 import { getAttributeMap, textToPngBuffer } from './utils';
 import axiosRateLimit, { RateLimitedAxiosInstance, rateLimitOptions } from 'axios-rate-limit';
 import axiosRetry, { IAxiosRetryConfig } from 'axios-retry';
+import * as path from 'path';
 export class ImagesAdapter {
   private readonly imagesMap: ImageMap = {};
   private imagesUrls: string[] = [];
@@ -24,12 +28,10 @@ export class ImagesAdapter {
     axiosRetry(this.axiosIns, { retries: 2 });
 
     // TODO: configure downloading in pack with 5-10 images
-    // eslint-disable-next-line no-console
     this.imagesUrls = Array.from(new Set(this.imagesUrls));
     const totalImagesLength = this.imagesUrls.length;
     for await (const [index, url] of this.imagesUrls.entries()) {
-      // eslint-disable-next-line no-console
-      console.log(
+      console.error(
         `downloadImage ${index + 1}/${totalImagesLength}, ${Math.floor(((index + 1) / totalImagesLength) * 100)}% `
       );
       await this.addImageToMap(url);
@@ -66,13 +68,21 @@ export class ImagesAdapter {
   async downloadImage(url: string | null): Promise<Buffer> {
     try {
       if (url) {
-        const res = await this.axiosIns.get(url, { responseType: 'arraybuffer', timeout: 5000 });
-        return Buffer.from(res.data, 'binary');
+        const tmpdir = '/tmp'; //os.tmpdir();
+        const hash = crypto.createHash('md5').update(url).digest('hex');
+        const filepath = path.join(tmpdir, hash);
+        if (existsSync(filepath)) {
+          console.error(`Download image cache: ${url}`);
+          return readFileSync(filepath);
+        } else {
+          const res = await this.axiosIns.get(url, { responseType: 'arraybuffer', timeout: 5000 });
+          writeFileSync(filepath, res.data);
+          return Buffer.from(res.data, 'binary');
+        }
       } else {
         return textToPngBuffer(`Image not src`, 300, 40);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(`Download image error: ${url} ${error}`);
       return textToPngBuffer(`DownErr ${url}`);
     }
