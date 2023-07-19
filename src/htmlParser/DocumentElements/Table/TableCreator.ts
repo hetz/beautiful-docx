@@ -27,7 +27,7 @@ export class TableCreator implements DocumentElement {
   private readonly content: DocumentElement[];
   private caption?: DocumentElement[];
 
-  constructor(private element: Element, private exportOptions: DocxExportOptions) {
+  constructor(private element: Element, parentTag: string, private exportOptions: DocxExportOptions) {
     this.attr = getAttributeMap(element.attributes);
     this.styles = parseStyles(this.attr['style']);
 
@@ -219,7 +219,7 @@ export class TableCreator implements DocumentElement {
   }
 
   private parseCaption(element: Element) {
-    return new HtmlParser(this.exportOptions).parseHtmlTree(element.children).map(i => {
+    return new HtmlParser(this.exportOptions).parseHtmlTree(element.children, 'caption').map(i => {
       if (i instanceof TextBlock) {
         i.options.alignment = AlignmentType.CENTER;
       }

@@ -41,7 +41,7 @@ export class Cell implements DocumentElement {
   }
 
   public get tableCellChildren() {
-    return new HtmlParser(this.exportOptions).parseHtmlTree(this.element.children);
+    return new HtmlParser(this.exportOptions).parseHtmlTree(this.element.children, 'td');
   }
 
   private get cellShading() {

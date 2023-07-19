@@ -37,7 +37,7 @@ export class Image implements DocumentElement {
 
   private readonly style: Styles;
 
-  constructor(private imageFigure: Element, private exportOptions: DocxExportOptions) {
+  constructor(private imageFigure: Element, private parentTag: string, private exportOptions: DocxExportOptions) {
     const image = imageFigure.children.find(item => item.type === 'element' && item.tagName === 'img') as Element;
     const imageAttr = getAttributeMap(image.attributes);
     const imageSourceUrl = imageAttr['src'];
@@ -221,7 +221,11 @@ export class Image implements DocumentElement {
   }
 
   transformToDocx() {
-    return [new Paragraph({ children: [new ImageRun(this.options)] }), new ImageRun(this.options)];
+    if (this.parentTag === 'td') {
+      return [new Paragraph({ children: [new ImageRun(this.options)] })];
+    } else {
+      return [new ImageRun(this.options)];
+    }
   }
 
   static getStaticImageElement(image: Image) {

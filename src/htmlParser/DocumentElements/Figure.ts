@@ -15,9 +15,9 @@ export class Figure implements DocumentElement {
     const imageNode = element.children.find(i => i.type === 'element' && i.tagName === 'img');
 
     if (tableNode) {
-      this.content = new TableCreator(tableNode as Element, docxExportOptions).getContent();
+      this.content = new TableCreator(tableNode as Element, 'table', docxExportOptions).getContent();
     } else if (imageNode) {
-      this.content = new Image(element, docxExportOptions).getContent();
+      this.content = new Image(element, 'img', docxExportOptions).getContent();
     } else {
       const tagsNames = element.children.map(i => (i.type === 'element' ? i.tagName : i.type)).join(', ');
       throw new Error(`Unsupported figure with content: ${tagsNames}`);

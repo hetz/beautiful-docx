@@ -26,7 +26,7 @@ export class HtmlParser {
 
     await this.setImages(parsedContent);
 
-    return this.parseHtmlTree(parsedContent);
+    return this.parseHtmlTree(parsedContent, '');
   }
 
   async setImages(content: Node[]) {
@@ -35,7 +35,7 @@ export class HtmlParser {
     this.options = { ...this.options, images };
   }
 
-  parseHtmlTree(root: Node[]) {
+  parseHtmlTree(root: Node[], parentTag: string) {
     const paragraphs: DocumentElement[] = [];
     let pCounts = 0;
 
@@ -46,7 +46,7 @@ export class HtmlParser {
           break;
         }
         case 'element': {
-          const topLevelElement = this.parseTopLevelElement(child, pCounts);
+          const topLevelElement = this.parseTopLevelElement(child, parentTag, pCounts);
           paragraphs.push(...topLevelElement);
 
           if (child.tagName === 'p') {
@@ -60,7 +60,7 @@ export class HtmlParser {
     return paragraphs;
   }
 
-  parseTopLevelElement = (element: Element, pIndex: number) => {
+  parseTopLevelElement = (element: Element, parentTag: string, pIndex: number) => {
     switch (element.tagName) {
       case 'html':
       case 'body':
@@ -73,7 +73,7 @@ export class HtmlParser {
       case 'article':
       case 'section':
       case 'pre': {
-        return this.parseHtmlTree(element.children);
+        return this.parseHtmlTree(element.children, parentTag);
       }
       case 'p': {
         return new Paragraph(element, pIndex, this.options).getContent();
@@ -121,10 +121,10 @@ export class HtmlParser {
         return new Figure(element, this.options).getContent();
       }
       case 'table': {
-        return new TableCreator(element, this.options).getContent();
+        return new TableCreator(element, parentTag, this.options).getContent();
       }
       case 'img': {
-        return new Image(this.coverWithFigure(element), this.options).getContent();
+        return new Image(this.coverWithFigure(element), parentTag, this.options).getContent();
       }
       case 'blockquote': {
         return new Blockquote(element).getContent();
