@@ -47,7 +47,7 @@
     "canvas": "^2.11.2",
     "colortranslator": "^1.9.2",
     "deepmerge": "^4.2.2",
-    "docx": "^7.8.2",
+    "docx": "^8.2.1",
     "himalaya": "^1.1.0",
     "image-size": "^1.0.1",
     "jest": "^28.1.2",

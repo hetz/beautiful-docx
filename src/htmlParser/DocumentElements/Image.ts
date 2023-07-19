@@ -221,7 +221,7 @@ export class Image implements DocumentElement {
   }
 
   transformToDocx() {
-    if (this.parentTag === 'td') {
+    if (['td', 'li'].includes(this.parentTag)) {
       return [new Paragraph({ children: [new ImageRun(this.options)] })];
     } else {
       return [new ImageRun(this.options)];
