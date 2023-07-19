@@ -25,9 +25,17 @@ export class DocxGenerator {
   }
 
   public async generateDocx(html: string): Promise<Buffer> {
-    const documentContent = await this.parser.parse(html);
+    const documentContent = await this.parser.parse(this.parseHtml(html));
     const doc = this.builder.build(documentContent);
 
     return await Packer.toBuffer(doc);
+  }
+  private parseHtml(html: string) {
+    // eslint-disable-next-line no-control-regex, no-irregular-whitespace
+    const reSpecialCharacters = /(||||﻿|||)/g;
+    // eslint-disable-next-line no-control-regex
+    const spaceCharacters = /(\x08|\x02)/g;
+    // eslint-disable-next-line no-irregular-whitespace
+    return html.replace(reSpecialCharacters, '').replace(spaceCharacters, ' ').replace(/ /g, ' ');
   }
 }
