@@ -15,12 +15,13 @@ declare enum ImageOrientation {
 }
 export declare class Image implements DocumentElement {
     private imageFigure;
+    private parentTag;
     private exportOptions;
     type: DocumentElementType;
     options: IImageOptions;
     isFloating: boolean;
     private readonly style;
-    constructor(imageFigure: Element, exportOptions: DocxExportOptions);
+    constructor(imageFigure: Element, parentTag: string, exportOptions: DocxExportOptions);
     private createOptions;
     private get floating();
     private getHorizontalPositionAlign;
@@ -29,7 +30,7 @@ export declare class Image implements DocumentElement {
     private get margins();
     private getWrapping;
     getContent(): this[];
-    transformToDocx(): (Paragraph | ImageRun)[];
+    transformToDocx(): Paragraph[] | ImageRun[];
     static getStaticImageElement(image: Image): TextBlock;
 }
 export {};

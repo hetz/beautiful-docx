@@ -7,5 +7,6 @@ export declare class DocxGenerator {
     private builder;
     constructor(docxExportOptions?: DeepPartial<DocxExportOptions>);
     generateDocx(html: string): Promise<Buffer>;
+    private parseHtml;
 }
 //# sourceMappingURL=DocxGenerator.d.ts.map

@@ -14,7 +14,7 @@ export declare class TableCreator implements DocumentElement {
     private readonly styles;
     private readonly content;
     private caption?;
-    constructor(element: Element, exportOptions: DocxExportOptions);
+    constructor(element: Element, parentTag: string, exportOptions: DocxExportOptions);
     transformToDocx(): Table[];
     private createRows;
     private parseTableRowsFragment;

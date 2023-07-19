@@ -6,8 +6,8 @@ export declare class HtmlParser {
     constructor(options: DocxExportOptions);
     parse(content: string): Promise<DocumentElement[]>;
     setImages(content: Node[]): Promise<void>;
-    parseHtmlTree(root: Node[]): DocumentElement[];
-    parseTopLevelElement: (element: Element, pIndex: number) => DocumentElement[];
+    parseHtmlTree(root: Node[], parentTag: string): DocumentElement[];
+    parseTopLevelElement: (element: Element, parentTag: string, pIndex: number) => DocumentElement[];
     private coverWithFigure;
 }
 //# sourceMappingURL=HtmlParser.d.ts.map
