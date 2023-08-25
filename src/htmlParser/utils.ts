@@ -209,13 +209,16 @@ const pixelsToNumber = (string: string): number => {
 
 export type SizeUnit = 'px' | 'pt' | 'em' | 'rem' | 'vh' | 'vw' | '%' | 'auto';
 
-export const parseSizeValue = (value: string | number): [number, SizeUnit] => {
+export const parseSizeValue = (value: string | number | any): [number, SizeUnit] => {
   if (typeof value === 'number') {
     return [value, 'px'];
   }
 
   if (value === 'auto') {
     return [0, 'auto'];
+  }
+  if (isNaN(value)) {
+    return [0, 'px'];
   }
 
   const match = value.match(/^(-?\d*\.?\d+)(px|pt|em|rem|vh|vw|%)$/i);
