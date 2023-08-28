@@ -218,7 +218,7 @@ export const parseSizeValue = (value: string | number | any): [number, SizeUnit]
     return [0, 'auto'];
   }
   if (isNaN(value)) {
-    return [0, 'px'];
+    return [0, 'auto'];
   }
 
   const match = value.match(/^(-?\d*\.?\d+)(px|pt|em|rem|vh|vw|%)$/i);
