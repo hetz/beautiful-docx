@@ -78,6 +78,10 @@ export class HtmlParser {
       case 'p': {
         return new Paragraph(element, pIndex, this.options).getContent();
       }
+      case 'tr':
+      case 'td': {
+        return '';
+      }
       case 'hr':
       case 'br': {
         return new TextBlock({}, new TextInline(element).getContent()).getContent();
