@@ -8,7 +8,7 @@ import { PageFormat } from '../src/options';
 const main = async () => {
   console.time('Loading');
 
-  const docxGeneratorOpt ={
+  const docxGeneratorOpt = {
     page: {
       size: { width: 8.3, height: 11.7 },
       numbering: { type: NumberFormat.DECIMAL, align: AlignmentType.END },

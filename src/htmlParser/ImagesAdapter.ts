@@ -31,7 +31,7 @@ export class ImagesAdapter {
     this.imagesUrls = Array.from(new Set(this.imagesUrls));
     const totalImagesLength = this.imagesUrls.length;
     for await (const [index, url] of this.imagesUrls.entries()) {
-      console.error(
+      console.log(
         `downloadImage ${index + 1}/${totalImagesLength}, ${Math.floor(((index + 1) / totalImagesLength) * 100)}% `
       );
       await this.addImageToMap(url);
@@ -72,7 +72,7 @@ export class ImagesAdapter {
         const hash = crypto.createHash('md5').update(url).digest('hex');
         const filepath = path.join(tmpdir, hash);
         if (existsSync(filepath)) {
-          console.error(`Download image cache: ${url}`);
+          console.log(`Cache hit: ${url}`);
           return readFileSync(filepath);
         } else {
           const res = await this.axiosIns.get(url, { responseType: 'arraybuffer', timeout: 5000 });

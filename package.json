@@ -21,7 +21,8 @@
     "format": "prettier --write",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
-    "example": "ts-node ./example/example.ts"
+    "example": "ts-node ./example/example.ts",
+    "exampleEach": "node -r ts-node/register/transpile-only ./example/exampleEach.ts"
   },
   "repository": {
     "type": "git",
