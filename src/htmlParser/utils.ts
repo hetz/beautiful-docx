@@ -97,6 +97,16 @@ export const parseTextAlignment = (attribs: Attribute[]): AlignmentType => {
   }
 };
 
+export const supportHtmlTextContent = (content: string): string => {
+  return content
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&copy;/g, '©')
+    .replace(/&reg;/g, '®');
+};
+
 export const cleanTextContent = (content: string): string => {
   return content.replace(/&nbsp;/g, ' ');
 };

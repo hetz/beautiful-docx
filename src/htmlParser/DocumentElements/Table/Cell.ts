@@ -35,7 +35,7 @@ export class Cell implements DocumentElement {
     return [
       new TableCell({
         ...this.options,
-        children: this.tableCellChildren.flatMap(i => i.transformToDocx()) as Paragraph[],
+        children: this.tableCellChildren.flatMap((i: any) => i.transformToDocx()) as Paragraph[],
       }),
     ];
   }

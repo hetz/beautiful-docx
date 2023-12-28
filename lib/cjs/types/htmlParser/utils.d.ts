@@ -15,6 +15,7 @@ export declare const convertPixelsToTwip: (pixels: number) => number;
 export declare const convertTwipToPixels: (twip: number) => number;
 export declare const convertPointsToTwip: (points: number) => number;
 export declare const parseTextAlignment: (attribs: Attribute[]) => AlignmentType;
+export declare const supportHtmlTextContent: (content: string) => string;
 export declare const cleanTextContent: (content: string) => string;
 export declare const getIndent: (paragraphIndex: number, docxExportOptions: DocxExportOptions) => {
     firstLine: number;

@@ -219,7 +219,7 @@ export class TableCreator implements DocumentElement {
   }
 
   private parseCaption(element: Element) {
-    return new HtmlParser(this.exportOptions).parseHtmlTree(element.children, 'caption').map(i => {
+    return new HtmlParser(this.exportOptions).parseHtmlTree(element.children, 'caption').map((i: any) => {
       if (i instanceof TextBlock) {
         i.options.alignment = AlignmentType.CENTER;
       }

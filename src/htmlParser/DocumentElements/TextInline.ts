@@ -1,7 +1,7 @@
 import { Element, Node, Attribute } from 'himalaya';
 import { BorderStyle, ExternalHyperlink, IRunOptions, ParagraphChild, ShadingType, TextRun, UnderlineType } from 'docx';
 
-import { cleanTextContent, getAttributeMap, parseStyles } from '../utils';
+import { cleanTextContent, getAttributeMap, parseStyles, supportHtmlTextContent } from '../utils';
 
 import { InlineTextType, DocumentElement } from './DocumentElement';
 import { ColorTranslator } from 'colortranslator';
@@ -99,7 +99,7 @@ export class TextInline implements DocumentElement {
 
     return this.content.flatMap(content => {
       if (typeof content === 'string') {
-        return [new TextRun({ text: cleanTextContent(content), ...this.options })];
+        return [new TextRun({ text: supportHtmlTextContent(cleanTextContent(content)), ...this.options })];
       } else {
         /**
          *  TODO: support

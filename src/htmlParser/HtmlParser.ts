@@ -18,11 +18,16 @@ import {
 import { ImagesAdapter } from './ImagesAdapter';
 import { TableOfContents } from './DocumentElements/TableOfContents';
 
+import { JSDOM } from 'jsdom';
+import DOMPurify from 'dompurify';
+const window = new JSDOM('').window;
+const purify = DOMPurify(window);
+
 export class HtmlParser {
-  constructor(public options: DocxExportOptions) {}
+  constructor(public options: DocxExportOptions) { }
 
   async parse(content: string) {
-    const parsedContent = parse(content);
+    const parsedContent = parse(purify.sanitize(content));
 
     await this.setImages(parsedContent);
 
@@ -36,7 +41,7 @@ export class HtmlParser {
   }
 
   parseHtmlTree(root: Node[], parentTag: string) {
-    const paragraphs: DocumentElement[] = [];
+    const paragraphs: DocumentElement[] | any = [];
     let pCounts = 0;
 
     for (const child of root) {

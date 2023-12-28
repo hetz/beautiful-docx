@@ -13,7 +13,7 @@ export declare class Cell implements DocumentElement {
     constructor(element: Element, exportOptions: DocxExportOptions, isHeader: boolean);
     getContent(): this[];
     transformToDocx(): TableCell[];
-    get tableCellChildren(): DocumentElement[];
+    get tableCellChildren(): any;
     private get cellShading();
     private get borders();
     private get verticalAlign();
