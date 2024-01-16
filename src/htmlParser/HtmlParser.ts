@@ -145,7 +145,9 @@ export class HtmlParser {
         return new TableOfContents().getContent();
       }
       default: {
-        throw new Error(`Unsupported top tag ${element.tagName}`);
+        console.error(`Unsupported top tag ${element.tagName}`);
+        return '';
+        // throw new Error(`Unsupported top tag ${element.tagName}`);
       }
     }
   };
