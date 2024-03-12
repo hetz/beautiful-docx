@@ -15,8 +15,12 @@ export class ListItem extends TextBlock {
   private readonly nestedElements: DocumentElement[] = [];
 
   constructor(element: Node, options: IParagraphOptions, level: number, exportOptions: DocxExportOptions) {
-    if (!(element.type === 'element' && element.tagName === 'li')) {
-      throw new Error('The child of list should be list item');
+    if (!(element.type === 'element')) {
+      throw new Error(`The child of list should be list item. Type: ${element.type}`);
+    }
+    if (!(element.tagName === 'li')) {
+      // throw new Error(
+      console.error(`The element tagName: ${element.tagName}, ElementObj: ${JSON.stringify(element)}`);
     }
 
     const liOptions: IParagraphOptions = {
