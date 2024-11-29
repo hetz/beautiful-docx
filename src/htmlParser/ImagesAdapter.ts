@@ -8,6 +8,7 @@ import { getAttributeMap, textToPngBuffer } from './utils';
 import axiosRateLimit, { RateLimitedAxiosInstance, rateLimitOptions } from 'axios-rate-limit';
 import axiosRetry, { IAxiosRetryConfig } from 'axios-retry';
 import * as path from 'path';
+import imageSize from 'image-size';
 export class ImagesAdapter {
   private readonly imagesMap: ImageMap = {};
   private imagesUrls: string[] = [];
@@ -76,15 +77,21 @@ export class ImagesAdapter {
           return readFileSync(filepath);
         } else {
           const res = await this.axiosIns.get(url, { responseType: 'arraybuffer', timeout: 5000 });
+          await imageSize(res.data);
           writeFileSync(filepath, res.data);
           return Buffer.from(res.data, 'binary');
         }
       } else {
         return textToPngBuffer(`Image not src`, 300, 40);
       }
-    } catch (error) {
-      console.error(`Download image error: ${url} ${error}`);
-      return textToPngBuffer(`DownErr ${url}`);
+    } catch (error: unknown) {
+      if (error instanceof Error && error.message.includes('unsupported file type: undefined (file: undefined)')) {
+        console.error(`Image filetype error: ${url} ${error}`);
+        return textToPngBuffer(`DownErr ${url}`);
+      } else {
+        console.error(`Download image error: ${url} ${error}`);
+        return textToPngBuffer(`DownErr ${url}`);
+      }
     }
   }
 }

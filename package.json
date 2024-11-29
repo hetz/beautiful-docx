@@ -51,7 +51,7 @@
     "docx": "^8.2.1",
     "dompurify": "^3.0.6",
     "himalaya": "^1.1.0",
-    "image-size": "^1.0.1",
+    "image-size": "^1.1.1",
     "jest": "^28.1.2",
     "jsdom": "^23.0.1",
     "ts-deepmerge": "^2.0.1",

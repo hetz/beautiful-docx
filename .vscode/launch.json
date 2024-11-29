@@ -10,7 +10,7 @@
             "name": "runCurrentFile",
             "cwd": "${workspaceFolder}",
             "program": "${fileDirname}/${fileBasename}",
-            "runtimeExecutable": "/Users/htz/Library/pnpm/nodejs/18.16.0/bin/node",
+            "runtimeExecutable": "/Users/htz/Library/pnpm/node",
             // "runtimeExecutable": "node",
             "runtimeArgs": [
                 "-r",

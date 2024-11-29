@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Node } from 'himalaya';
 import { ImageMap } from '../options';
 export declare class ImagesAdapter {

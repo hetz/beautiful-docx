@@ -1,4 +1,4 @@
-import { BorderStyle, IBorderOptions } from 'docx';
+import { IBorderOptions } from 'docx';
 import { Node, Styles } from 'himalaya';
 export declare const isInlineTextElement: (node: Node) => boolean;
 export declare const parseBorderStyle: (style: string | undefined) => BorderStyle;

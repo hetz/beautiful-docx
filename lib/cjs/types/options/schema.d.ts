@@ -19,43 +19,43 @@ export declare const userOptionsSchema: z.ZodObject<{
             bottom: z.ZodOptional<z.ZodNumber>;
             left: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
-            top?: number | undefined;
-            right?: number | undefined;
-            bottom?: number | undefined;
             left?: number | undefined;
+            right?: number | undefined;
+            top?: number | undefined;
+            bottom?: number | undefined;
         }, {
-            top?: number | undefined;
-            right?: number | undefined;
-            bottom?: number | undefined;
             left?: number | undefined;
+            right?: number | undefined;
+            top?: number | undefined;
+            bottom?: number | undefined;
         }>>;
         number: z.ZodOptional<z.ZodBoolean>;
     }, "strip", z.ZodTypeAny, {
+        number?: boolean | undefined;
         orientation?: PageOrientation | undefined;
         size?: {
             height?: number | undefined;
             width?: number | undefined;
         } | undefined;
         margins?: {
-            top?: number | undefined;
-            right?: number | undefined;
-            bottom?: number | undefined;
             left?: number | undefined;
+            right?: number | undefined;
+            top?: number | undefined;
+            bottom?: number | undefined;
         } | undefined;
-        number?: boolean | undefined;
     }, {
+        number?: boolean | undefined;
         orientation?: PageOrientation | undefined;
         size?: {
             height?: number | undefined;
             width?: number | undefined;
         } | undefined;
         margins?: {
-            top?: number | undefined;
-            right?: number | undefined;
-            bottom?: number | undefined;
             left?: number | undefined;
+            right?: number | undefined;
+            top?: number | undefined;
+            bottom?: number | undefined;
         } | undefined;
-        number?: boolean | undefined;
     }>>;
     font: z.ZodOptional<z.ZodObject<{
         baseSize: z.ZodOptional<z.ZodNumber>;
@@ -134,18 +134,18 @@ export declare const userOptionsSchema: z.ZodObject<{
     ignoreIndentation: z.ZodOptional<z.ZodBoolean>;
 }, "strict", z.ZodTypeAny, {
     page?: {
+        number?: boolean | undefined;
         orientation?: PageOrientation | undefined;
         size?: {
             height?: number | undefined;
             width?: number | undefined;
         } | undefined;
         margins?: {
-            top?: number | undefined;
-            right?: number | undefined;
-            bottom?: number | undefined;
             left?: number | undefined;
+            right?: number | undefined;
+            top?: number | undefined;
+            bottom?: number | undefined;
         } | undefined;
-        number?: boolean | undefined;
     } | undefined;
     font?: {
         baseSize?: number | undefined;
@@ -170,18 +170,18 @@ export declare const userOptionsSchema: z.ZodObject<{
     ignoreIndentation?: boolean | undefined;
 }, {
     page?: {
+        number?: boolean | undefined;
         orientation?: PageOrientation | undefined;
         size?: {
             height?: number | undefined;
             width?: number | undefined;
         } | undefined;
         margins?: {
-            top?: number | undefined;
-            right?: number | undefined;
-            bottom?: number | undefined;
             left?: number | undefined;
+            right?: number | undefined;
+            top?: number | undefined;
+            bottom?: number | undefined;
         } | undefined;
-        number?: boolean | undefined;
     } | undefined;
     font?: {
         baseSize?: number | undefined;

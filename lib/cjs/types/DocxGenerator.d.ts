@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { DocxExportOptions } from './options';
 import { DeepPartial } from './utils';
 export declare class DocxGenerator {
