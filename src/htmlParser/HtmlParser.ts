@@ -58,12 +58,6 @@ export class HtmlParser {
     let pCounts = 0;
 
     for (const child of root) {
-      if (typeof global.gc === 'function') {
-        const memUsage = process.memoryUsage();
-        const rss = memUsage.rss / 1024 / 1024;
-        console.log('parseHtmlTree memoryUsage:', rss.toFixed(2));
-        global.gc();
-      }
       switch (child.type) {
         case 'text': {
           paragraphs.push(...new TextBlock({}, new TextInline(child).getContent()).getContent());
