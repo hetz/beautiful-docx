@@ -5,6 +5,7 @@ import merge from 'ts-deepmerge';
 
 import { defaultExportOptions, DocxExportOptions, userOptionsSchema } from './options';
 import { DeepPartial } from './utils';
+import { DocumentElement } from './htmlParser/DocumentElements';
 
 export class DocxGenerator {
   public readonly options: DocxExportOptions;
@@ -24,8 +25,15 @@ export class DocxGenerator {
     this.builder = new DocumentBuilder(this.options);
   }
 
-  public async generateDocx(html: string): Promise<Buffer> {
-    const documentContent = await this.parser.parse(this.parseHtml(html));
+  public async generateDocx(html: string | string[]): Promise<Buffer> {
+    let documentContent: DocumentElement[] = [];
+    if (Array.isArray(html)) {
+      for await (const htmlPart of html) {
+        documentContent.push(await this.parser.parse(this.parseHtml(htmlPart)));
+      }
+    } else {
+      documentContent = await this.parser.parse(this.parseHtml(html));
+    }
     const doc = this.builder.build(documentContent);
 
     return await Packer.toBuffer(doc);

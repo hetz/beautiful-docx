@@ -27,8 +27,21 @@ export class HtmlParser {
   constructor(public options: DocxExportOptions) { }
 
   async parse(content: string) {
-    const parsedContent = parse(purify.sanitize(content));
-
+    if (typeof global.gc === 'function') {
+      const memUsage = process.memoryUsage();
+      const rss = memUsage.rss / 1024 / 1024;
+      console.log('parsedContent before memoryUsage:', rss.toFixed(2));
+      global.gc();
+    }
+    const purifyContent = purify.sanitize(content);
+    const parsedContent = parse(purifyContent);
+    // const parsedContent = parse(content);
+    if (typeof global.gc === 'function') {
+      global.gc();
+      const memUsage = process.memoryUsage();
+      const rss = memUsage.rss / 1024 / 1024;
+      console.log('parsedContent gc after memoryUsage:', rss.toFixed(2));
+    }
     await this.setImages(parsedContent);
 
     return this.parseHtmlTree(parsedContent, '');
@@ -45,6 +58,12 @@ export class HtmlParser {
     let pCounts = 0;
 
     for (const child of root) {
+      if (typeof global.gc === 'function') {
+        const memUsage = process.memoryUsage();
+        const rss = memUsage.rss / 1024 / 1024;
+        console.log('parseHtmlTree memoryUsage:', rss.toFixed(2));
+        global.gc();
+      }
       switch (child.type) {
         case 'text': {
           paragraphs.push(...new TextBlock({}, new TextInline(child).getContent()).getContent());

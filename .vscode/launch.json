@@ -13,6 +13,7 @@
             "runtimeExecutable": "/Users/htz/Library/pnpm/node",
             // "runtimeExecutable": "node",
             "runtimeArgs": [
+                "--expose-gc",
                 "-r",
                 "ts-node/register/transpile-only"
             ],
