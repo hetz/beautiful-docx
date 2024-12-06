@@ -47,12 +47,12 @@ import { PageFormat } from '../src/options';
 
   // Split HTML by <h1> tag</h1>
   const regexReplaceTitle = new RegExp('<h1 style="text-align: center;">(.*?)导出</h1>', 'g');
-  const HTMLArr = HTML.replace(regexReplaceTitle, '').split('<h1>');
+  const HTMLArr = HTML.replace(regexReplaceTitle, '').split('<h3>');
   console.log(`Total count: ${HTMLArr.length}`);
   for await (const [index, html] of HTMLArr.entries()) {
     console.time(`Loading-${index}, length: ${html.length}`);
     try {
-      const buffer = await docxGenerator.generateDocx(`<h1>${html}`);
+      const buffer = await docxGenerator.generateDocx(`<h3>${html}`);
       console.timeEnd(`Loading-${index}, length: ${html.length}`);
       fs.writeFileSync(`test-lib-${index}.docx`, buffer);
     } catch (error) {

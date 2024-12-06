@@ -25,15 +25,12 @@ export class DocxGenerator {
     this.builder = new DocumentBuilder(this.options);
   }
 
-  public async generateDocx(html: string | string[]): Promise<Buffer> {
-    let documentContent: DocumentElement[] = [];
-    if (Array.isArray(html)) {
-      for await (const htmlPart of html) {
-        documentContent.push(await this.parser.parse(this.parseHtml(htmlPart)));
-      }
-    } else {
-      documentContent = await this.parser.parse(this.parseHtml(html));
+  public async generateDocx(html: string, cut?: string): Promise<Buffer> {
+    if (cut == undefined) {
+      cut = '<page-break />';
     }
+    let documentContent: DocumentElement[] = [];
+    documentContent = await this.parser.parse(this.parseHtml(html), cut);
     const doc = this.builder.build(documentContent);
 
     return await Packer.toBuffer(doc);

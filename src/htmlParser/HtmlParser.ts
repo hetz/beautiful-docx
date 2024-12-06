@@ -1,3 +1,4 @@
+import v8 from 'v8';
 import { HeadingLevel } from 'docx';
 import { Element, Node, parse } from 'himalaya';
 import { DocxExportOptions } from '../options';
@@ -26,14 +27,14 @@ const purify = DOMPurify(window);
 export class HtmlParser {
   constructor(public options: DocxExportOptions) { }
 
-  async parse(content: string) {
+  async parse(content: string, cut = '<page-break />') {
     if (typeof global.gc === 'function') {
       const memUsage = process.memoryUsage();
       const rss = memUsage.rss / 1024 / 1024;
       console.log('parsedContent before memoryUsage:', rss.toFixed(2));
       global.gc();
     }
-    const purifyContent = purify.sanitize(content);
+    const purifyContent = await this.splitHtmlByRootElement(content, cut);
     const parsedContent = parse(purifyContent);
     // const parsedContent = parse(content);
     if (typeof global.gc === 'function') {
@@ -49,8 +50,37 @@ export class HtmlParser {
 
   async setImages(content: Node[]) {
     const images = await new ImagesAdapter(this.options.images).downloadImages(content);
-
     this.options = { ...this.options, images };
+  }
+  async splitHtmlByRootElement(html: string, cut: string) {
+    const rootElements: string[] = [];
+
+    const htmlArr = html.split(cut).map(function (x) {
+      return `${x}${cut}`;
+    });
+
+    const htmlArrLength = htmlArr.length;
+    let domIndex = 0;
+    for (const element of htmlArr) {
+      domIndex++;
+      console.log(
+        `splitHtmlByRootElement domArr: ${domIndex}/${htmlArrLength}, ${Math.floor((domIndex / htmlArrLength) * 100)}% `
+      );
+      if (typeof global.gc === 'function') {
+        const MB = 1024 * 1024;
+        const maxMemo = (v8.getHeapStatistics().heap_size_limit / MB).toFixed(2);
+        const memUsage = process.memoryUsage();
+        const rss = (memUsage.rss / MB).toFixed(2);
+        const costMemo = Math.floor(parseInt(rss) / parseInt(maxMemo)) * 100;
+        console.log(`Memory:  ${rss}/${maxMemo}MB ${costMemo}%`);
+        if (costMemo > 95) {
+          console.log(`Memory is too high, GC.`);
+          global.gc();
+        }
+      }
+      rootElements.push(purify.sanitize(element));
+    }
+    return rootElements.join('');
   }
 
   parseHtmlTree(root: Node[], parentTag: string) {

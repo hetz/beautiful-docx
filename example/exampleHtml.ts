@@ -1,4 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/**
+node -r ts-node/register/transpile-only ./exampleHtml.ts --html=./exprot_project_20241206_100833.html
+ */
+
 import { DocxGenerator } from '../src';
 // import { DocxGenerator } from 'beautiful-docx';
 import path from 'path';
@@ -38,8 +42,12 @@ import { AlignmentType, NumberFormat } from 'docx';
     verticalSpaces: 1.15,
   };
   const docxGenerator = new DocxGenerator(docxGeneratorOpt);
-  const HTML = fs.readFileSync(path.join(options.html), 'utf8');
+  const HTML = fs.readFileSync(path.join(__dirname, options.html), 'utf8');
   const buffer = await docxGenerator.generateDocx(HTML);
+  // const HTMLArr = HTML.split('<h3>').map(function (x) {
+  //   return `<h3>${x}`;
+  // });
+  // const buffer = await docxGenerator.generateDocx(HTMLArr);
   console.timeEnd('Loading');
   fs.writeFileSync(path.join(__dirname, options.html.replace('.html', '.docx')), buffer);
 
@@ -62,5 +70,3 @@ import { AlignmentType, NumberFormat } from 'docx';
       return obj;
     }, {})
 );
-
-node -r ts-node/register/transpile-only
