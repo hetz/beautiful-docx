@@ -104,7 +104,6 @@ export class HtmlParser {
         }
       }
     }
-
     return paragraphs;
   }
 

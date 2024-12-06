@@ -54,7 +54,7 @@ import { PageFormat } from '../src/options';
     try {
       const buffer = await docxGenerator.generateDocx(`<h1>${html}`);
       console.timeEnd(`Loading-${index}, length: ${html.length}`);
-      fs.writeFileSync(`test-lib-${index}.docx`, buffer);
+      fs.writeFileSync(path.join(__dirname, `${options.html.replace('.html', '_' + index + '.docx')}`), buffer);
     } catch (error) {
       console.error(html);
       console.log(JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
