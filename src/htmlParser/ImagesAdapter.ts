@@ -71,14 +71,18 @@ export class ImagesAdapter {
       if (url) {
         const tmpdir = os.tmpdir();
         const hash = crypto.createHash('md5').update(url).digest('hex');
-        const filepath = path.join(tmpdir, hash);
-        if (existsSync(filepath)) {
-          console.log(`Cache hit: ${url}`);
-          return readFileSync(filepath);
+        const file_url_path = path.join(tmpdir, url);
+        const file_hash_path = path.join(tmpdir, hash);
+        if (existsSync(file_url_path)) {
+          console.log(`Cache url hit: ${url}`);
+          return readFileSync(file_url_path);
+        } else if (existsSync(file_hash_path)) {
+          console.log(`Cache hash hit: ${url}`);
+          return readFileSync(file_hash_path);
         } else {
           const res = await this.axiosIns.get(url, { responseType: 'arraybuffer', timeout: 5000 });
           await imageSize(res.data);
-          writeFileSync(filepath, res.data);
+          writeFileSync(file_hash_path, res.data);
           return Buffer.from(res.data, 'binary');
         }
       } else {
