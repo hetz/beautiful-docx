@@ -1,7 +1,7 @@
 import { AlignmentType, convertInchesToTwip, convertMillimetersToTwip } from 'docx';
 import { Attribute, Styles } from 'himalaya';
 import { DocxExportOptions } from '../options';
-import { createCanvas } from 'canvas';
+import { createCanvas } from '@napi-rs/canvas';
 
 export const FIRST_LINE_INDENT_MILLIMETERS = 6;
 export const PIXELS_TO_POINT_RATIO = 1 / 4;

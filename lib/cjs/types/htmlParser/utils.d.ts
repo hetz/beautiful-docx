@@ -1,3 +1,5 @@
+/// <reference types="node" />
+/// <reference types="node" />
 import { Attribute, Styles } from 'himalaya';
 import { DocxExportOptions } from '../options';
 export declare const FIRST_LINE_INDENT_MILLIMETERS = 6;
