@@ -1,9 +1,11 @@
 /// <reference types="node" />
 /// <reference types="node" />
+import { AlignmentType } from 'docx';
 import { Attribute, Styles } from 'himalaya';
 import { DocxExportOptions } from '../options';
 export declare const FIRST_LINE_INDENT_MILLIMETERS = 6;
 export declare const PIXELS_TO_POINT_RATIO: number;
+export type AlignmentTypeValue = (typeof AlignmentType)[keyof typeof AlignmentType];
 export type AttributeMap = {
     [k: string]: string;
 };
@@ -14,7 +16,7 @@ export declare const convertPointsToPixels: (points: string | number) => number;
 export declare const convertPixelsToTwip: (pixels: number) => number;
 export declare const convertTwipToPixels: (twip: number) => number;
 export declare const convertPointsToTwip: (points: number) => number;
-export declare const parseTextAlignment: (attribs: Attribute[]) => AlignmentType;
+export declare const parseTextAlignment: (attribs: Attribute[]) => AlignmentTypeValue;
 export declare const supportHtmlTextContent: (content: string) => string;
 export declare const cleanTextContent: (content: string) => string;
 export declare const getIndent: (paragraphIndex: number, docxExportOptions: DocxExportOptions) => {

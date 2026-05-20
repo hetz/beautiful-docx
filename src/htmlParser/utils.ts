@@ -5,6 +5,7 @@ import { createCanvas } from '@napi-rs/canvas';
 
 export const FIRST_LINE_INDENT_MILLIMETERS = 6;
 export const PIXELS_TO_POINT_RATIO = 1 / 4;
+export type AlignmentTypeValue = (typeof AlignmentType)[keyof typeof AlignmentType];
 export type AttributeMap = {
   [k: string]: string;
 };
@@ -79,7 +80,7 @@ export const convertPointsToTwip = (points: number): number => {
   return points * twipPerPoint;
 };
 
-export const parseTextAlignment = (attribs: Attribute[]): AlignmentType => {
+export const parseTextAlignment = (attribs: Attribute[]): AlignmentTypeValue => {
   const cellAttributes = getAttributeMap(attribs);
   const style = parseStyles(cellAttributes['style']);
 

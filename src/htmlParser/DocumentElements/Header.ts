@@ -6,10 +6,12 @@ import { TextInline } from './TextInline';
 import { parseTextAlignment } from '../utils';
 import { DocumentElementType } from './DocumentElement';
 
+type DocxHeadingLevel = (typeof HeadingLevel)[keyof typeof HeadingLevel];
+
 export class Header extends TextBlock {
   public type: DocumentElementType = 'heading';
 
-  constructor(element: Element, level: HeadingLevel) {
+  constructor(element: Element, level: DocxHeadingLevel) {
     const options = {
       heading: level,
       alignment: parseTextAlignment(element.attributes),

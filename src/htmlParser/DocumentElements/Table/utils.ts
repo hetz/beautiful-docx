@@ -4,6 +4,7 @@ import { Node, Styles } from 'himalaya';
 
 const INLINE_TEXT_ELEMENTS = ['strong', 'i', 'u', 's', 'a', 'span', 'b', 'del'];
 const TABLE_LEFT_INDENT = 0.06;
+type DocxBorderStyle = (typeof BorderStyle)[keyof typeof BorderStyle];
 
 export const isInlineTextElement = (node: Node): boolean => {
   if (node.type === 'text') {
@@ -13,7 +14,7 @@ export const isInlineTextElement = (node: Node): boolean => {
   return node.type === 'element' && INLINE_TEXT_ELEMENTS.includes(node.tagName);
 };
 
-export const parseBorderStyle = (style: string | undefined): BorderStyle => {
+export const parseBorderStyle = (style: string | undefined): DocxBorderStyle => {
   switch (style) {
     case 'solid':
       return BorderStyle.SINGLE;
@@ -36,7 +37,7 @@ export const parseBorderOptions = (styles: Styles): IBorderOptions => {
   const defaultStyle = BorderStyle.SINGLE;
   const defaultColor = 'bfbfbf';
   const defaultSize = 4;
-  let border: { size: number; color: string; style: BorderStyle } = {
+  let border: { size: number; color: string; style: DocxBorderStyle } = {
     size: defaultSize,
     color: defaultColor,
     style: defaultStyle,

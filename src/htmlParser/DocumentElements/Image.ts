@@ -51,15 +51,67 @@ export class Image implements DocumentElement {
     }
 
     const imageBuffer = exportOptions.images[imageSourceUrl];
-    this.options = this.createOptions(imageBuffer);
+    this.options = this.createOptions(imageBuffer, imageSourceUrl);
   }
 
-  private createOptions(imageBuffer: Buffer) {
+  private createOptions(imageBuffer: Buffer, imageSourceUrl: string): IImageOptions {
+    const imageType = this.getImageType(imageBuffer, imageSourceUrl);
+    if (imageType === 'svg') {
+      throw new Error('SVG images are not supported. Please provide a raster image (png/jpg/gif/bmp).');
+    }
+
     return {
+      type: imageType,
       data: imageBuffer,
       transformation: this.getImageSize(imageBuffer),
       floating: this.floating,
     };
+  }
+
+  private getImageType(imageBuffer: Buffer, imageSourceUrl: string): 'png' | 'jpg' | 'gif' | 'bmp' | 'svg' {
+    const header = imageBuffer.subarray(0, 16);
+    if (
+      header.length >= 8 &&
+      header[0] === 0x89 &&
+      header[1] === 0x50 &&
+      header[2] === 0x4e &&
+      header[3] === 0x47 &&
+      header[4] === 0x0d &&
+      header[5] === 0x0a &&
+      header[6] === 0x1a &&
+      header[7] === 0x0a
+    ) {
+      return 'png';
+    }
+
+    if (header.length >= 3 && header[0] === 0xff && header[1] === 0xd8 && header[2] === 0xff) {
+      return 'jpg';
+    }
+
+    if (header.length >= 6) {
+      const signature = header.subarray(0, 6).toString('ascii');
+      if (signature === 'GIF87a' || signature === 'GIF89a') {
+        return 'gif';
+      }
+    }
+
+    if (header.length >= 2 && header[0] === 0x42 && header[1] === 0x4d) {
+      return 'bmp';
+    }
+
+    const maybeText = imageBuffer.subarray(0, 256).toString('utf8').trimStart();
+    if (maybeText.startsWith('<') && maybeText.includes('<svg')) {
+      return 'svg';
+    }
+
+    const normalizedUrl = imageSourceUrl.toLowerCase();
+    if (normalizedUrl.endsWith('.png')) return 'png';
+    if (normalizedUrl.endsWith('.jpg') || normalizedUrl.endsWith('.jpeg')) return 'jpg';
+    if (normalizedUrl.endsWith('.gif')) return 'gif';
+    if (normalizedUrl.endsWith('.bmp')) return 'bmp';
+    if (normalizedUrl.endsWith('.svg')) return 'svg';
+
+    return 'png';
   }
 
   private get floating() {
@@ -81,7 +133,10 @@ export class Image implements DocumentElement {
     return undefined;
   }
 
-  private getHorizontalPositionAlign(): HorizontalPositionAlign {
+  private getHorizontalPositionAlign():
+    | typeof HorizontalPositionAlign.LEFT
+    | typeof HorizontalPositionAlign.RIGHT
+    | typeof HorizontalPositionAlign.CENTER {
     if (this.style['float'] === 'left') {
       return HorizontalPositionAlign.LEFT;
     }

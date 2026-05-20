@@ -23,6 +23,7 @@ export declare class Image implements DocumentElement {
     private readonly style;
     constructor(imageFigure: Element, parentTag: string, exportOptions: DocxExportOptions);
     private createOptions;
+    private getImageType;
     private get floating();
     private getHorizontalPositionAlign;
     private getImageSize;

@@ -9,6 +9,8 @@ export type ImageMap = {
 type LengthUnit = number;
 
 type FontSize = number;
+type DocxAlignmentType = (typeof AlignmentType)[keyof typeof AlignmentType];
+type DocxNumberFormat = (typeof NumberFormat)[keyof typeof NumberFormat];
 
 export enum PageOrientation {
   Portrait = 'portrait',
@@ -26,9 +28,9 @@ export type PageFormatSizes = { [x in PageFormatType]: PageSize };
 export type NumberingOptions =
   | false
   | {
-      type: NumberFormat;
+      type: DocxNumberFormat;
       start?: number;
-      align?: AlignmentType;
+      align?: DocxAlignmentType;
     };
 
 export type PageOptions = {

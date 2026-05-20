@@ -7,6 +7,8 @@ import { AttributeMap, convertPixelsToTwip, getAttributeMap, parsePaddings, pars
 import { parseBorderOptions } from './utils';
 import { DocumentElement, DocumentElementType } from '../DocumentElement';
 
+type TableVerticalAlignValue = typeof VerticalAlign.TOP | typeof VerticalAlign.BOTTOM | typeof VerticalAlign.CENTER;
+
 export class Cell implements DocumentElement {
   type: DocumentElementType = 'table-cell';
   public options: ITableCellOptions;
@@ -75,7 +77,7 @@ export class Cell implements DocumentElement {
       right: borderOptions,
     };
   }
-  private get verticalAlign(): VerticalAlign {
+  private get verticalAlign(): TableVerticalAlignValue {
     switch (this.styles['vertical-align']) {
       case 'top':
         return VerticalAlign.TOP;
